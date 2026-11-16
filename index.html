@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f6f5f1">
-  <title>Weatherly - A little outlook</title>
+  <title>Weatherly - 掌握天氣，從容出發</title>
   <style>
     :root { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #242a28; background: #f6f5f1; font-size: 15px; --surface: #fff; --line: #e5e6df; --muted: #737b75; --accent: #ad650f; --tint: #faf0dc; --hero: #fbf3e4; --shadow: 0 5px 22px #303a2611; }
     * { box-sizing: border-box; }
@@ -19,6 +19,9 @@
     .brand { display: flex; align-items: center; gap: 9px; font-size: 22px; font-weight: 750; letter-spacing: -.9px; }
     .brand svg { color: #b37a29; width: 29px; height: 29px; }
     .tagline { color: var(--muted); font-size: 12px; }
+    .header-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+    header { gap: 12px; }
+    html[lang="zh-Hant"] h1 { letter-spacing: 0; }
     .intro { margin-bottom: 24px; }
     h1 { font-size: clamp(29px, 5vw, 36px); letter-spacing: -1.35px; margin: 0 0 10px; font-weight: 650; }
     .intro p { color: var(--muted); margin: 0; line-height: 1.6; }
@@ -100,26 +103,29 @@
   <div class="shell">
     <header>
       <div class="brand"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2"/><path d="M16 2v4m0 20v4M2 16h4m20 0h4M6 6l3 3m14 14 3 3M6 26l3-3M23 9l3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>weatherly<span style="color:#b37a29">.</span></div>
-      <span class="tagline">A little outlook. A better day.</span>
+      <div class="header-tools">
+        <div class="units" role="group" data-i18n-aria="language" aria-label="介面語言"><button type="button" data-language="zh-Hant" lang="zh-Hant" aria-pressed="true">繁中</button><button type="button" data-language="en" lang="en" aria-pressed="false">English</button></div>
+        <span class="tagline" data-i18n="tagline">掌握天氣，從容出發。</span>
+      </div>
     </header>
     <main>
-      <div class="intro"><h1>Find your forecast.</h1><p>A look outside, wherever you are.</p></div>
+      <div class="intro"><h1 data-i18n="heading">查詢你的天氣預報。</h1><p data-i18n="intro">無論身在何處，隨時掌握當地天氣。</p></div>
       <div class="search-area">
         <form class="search" id="search-form" role="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
-          <input id="city-search" type="search" aria-label="Search for a city" placeholder="Search for a city..." required maxlength="100" autocomplete="off" aria-controls="search-results">
-          <button type="submit" id="search-button">Search</button>
+          <input id="city-search" type="search" data-i18n-aria="searchLabel" aria-label="搜尋城市" placeholder="輸入城市名稱..." required maxlength="100" autocomplete="off" aria-controls="search-results">
+          <button type="submit" id="search-button" data-i18n="search">搜尋</button>
         </form>
-        <div class="results" id="search-results" aria-label="Matching cities" hidden></div>
+        <div class="results" id="search-results" data-i18n-aria="matchingCities" aria-label="符合的城市" hidden></div>
         <p class="message" id="search-status" role="status"></p>
       </div>
-      <section id="weather" aria-label="Weather forecast" aria-busy="true">
+      <section id="weather" data-i18n-aria="forecastLabel" aria-label="天氣預報" aria-busy="true">
         <div class="location-row">
           <div><div class="location-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><h2 id="city-name">Tokyo</h2></div><div class="country" id="city-detail">Japan</div></div>
-          <div class="units" role="group" aria-label="Temperature unit"><button type="button" data-unit="c" aria-label="Celsius" aria-pressed="true">&deg;C</button><button type="button" data-unit="f" aria-label="Fahrenheit" aria-pressed="false">&deg;F</button></div>
+          <div class="units" role="group" data-i18n-aria="temperatureUnit" aria-label="溫度單位"><button type="button" data-unit="c" data-i18n-aria="celsius" aria-label="攝氏" aria-pressed="true">&deg;C</button><button type="button" data-unit="f" data-i18n-aria="fahrenheit" aria-label="華氏" aria-pressed="false">&deg;F</button></div>
         </div>
         <div class="current">
-          <div class="current-top"><span class="eyebrow">Current weather</span><span class="source" id="data-source">Connecting</span></div>
+          <div class="current-top"><span class="eyebrow" data-i18n="currentWeather">目前天氣</span><span class="source" id="data-source">連線中</span></div>
           <div class="weather-main">
             <div><div class="temperature" id="temperature"></div><div class="condition" id="condition"></div><div class="high-low" id="high-low"></div></div>
             <div class="hero-art" id="hero-art" aria-hidden="true"></div>
@@ -131,16 +137,86 @@
           </div>
         </div>
         <p class="message" id="weather-status" role="status"></p>
-        <div class="forecast-heading"><h3>The next 5 days</h3><span>High / Low &middot; Rain chance</span></div>
+        <div class="forecast-heading"><h3 data-i18n="nextDays">未來 5 天</h3><span data-i18n="forecastLegend">最高／最低溫 · 降雨機率</span></div>
         <div class="forecast" id="forecast"></div>
         <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14a6 6 0 1 1 8 0c-1 1-1 2-1 2H9s0-1-1-2Z"/></svg><span id="weather-tip">A little preparation goes a long way.</span></div>
       </section>
     </main>
-    <footer><span>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></span><span id="updated" class="footer-mark">Made for everyday adventures.</span></footer>
+    <footer><span><span data-i18n="attribution">天氣資料來源：</span><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></span><span id="updated" class="footer-mark">為每一天的旅程而生。</span></footer>
   </div>
   <script>
     const $ = id => document.getElementById(id);
-    const tokyo = { name: 'Tokyo', country: 'Japan', latitude: 35.6762, longitude: 139.6503, timezone: 'Asia/Tokyo' };
+    let language = 'zh-Hant';
+    const translations = {
+      'zh-Hant': {
+        title: 'Weatherly - 掌握天氣，從容出發', language: '介面語言', tagline: '掌握天氣，從容出發。',
+        heading: '查詢你的天氣預報。', intro: '無論身在何處，隨時掌握當地天氣。',
+        search: '搜尋', searchLabel: '搜尋城市', placeholder: '輸入城市名稱...', matchingCities: '符合的城市',
+        forecastLabel: '天氣預報', temperatureUnit: '溫度單位', celsius: '攝氏', fahrenheit: '華氏',
+        currentWeather: '目前天氣', feelsLike: '體感溫度', humidity: '相對濕度', wind: '風速', windUnit: '公里／小時',
+        nextDays: '未來 5 天', forecastLegend: '最高／最低溫 · 降雨機率', attribution: '天氣資料來源：',
+        sampleDate: '範例預報', clearNight: '晴朗夜晚', high: '最高', low: '最低', live: '即時天氣', sample: '範例天氣',
+        updated: '當地時間 {time} 更新', offline: '離線預覽 · 非即時資料', tomorrow: '明天', rainChance: '降雨機率 {value}%',
+        loadingWeather: '正在取得 {city} 的即時天氣…',
+        weatherFailed: '目前無法取得 {city} 的即時天氣。以下顯示已儲存的東京範例，並非目前實況。請重新搜尋以重試。',
+        enterCity: '請輸入要搜尋的城市名稱。', searching: '正在尋找城市…', noCities: '找不到符合的城市，請嘗試其他名稱或拼法。',
+        chooseCity: '請選擇下方城市。', searchFailed: '目前無法搜尋城市。請檢查網路連線後重試，畫面上的預報未變更。',
+        clear: '晴朗', partlyCloudy: '晴時多雲', overcast: '陰天', foggy: '有霧', snowy: '下雪', thunder: '雷雨', drizzle: '毛毛雨', showers: '陣雨', rainy: '下雨',
+        sunTip: '陽光正好，帶上太陽眼鏡，享受戶外時光。',
+        partlyCloudyTip: '陽光與雲朵相伴，不妨繞點遠路，欣賞沿途風景。',
+        cloudTip: '天色陰柔，出門帶件薄外套更安心。',
+        fogTip: '霧氣可能使能見度快速變化，外出請放慢腳步。',
+        snowTip: '注意保暖與腳下濕滑，多穿幾層再出門。',
+        thunderTip: '留意天候變化，聽見雷聲時請立即進入室內。',
+        rainTip: '今天適合帶把傘，外出記得準備防水外套。'
+      },
+      en: {
+        title: 'Weatherly - A little outlook', language: 'Interface language', tagline: 'A little outlook. A better day.',
+        heading: 'Find your forecast.', intro: 'A look outside, wherever you are.',
+        search: 'Search', searchLabel: 'Search for a city', placeholder: 'Search for a city...', matchingCities: 'Matching cities',
+        forecastLabel: 'Weather forecast', temperatureUnit: 'Temperature unit', celsius: 'Celsius', fahrenheit: 'Fahrenheit',
+        currentWeather: 'Current weather', feelsLike: 'Feels like', humidity: 'Humidity', wind: 'Wind', windUnit: 'km/h',
+        nextDays: 'The next 5 days', forecastLegend: 'High / Low · Rain chance', attribution: 'Weather data by ',
+        sampleDate: 'Illustrative forecast', clearNight: 'Clear night', high: 'H:', low: 'L:', live: 'Live weather', sample: 'Sample weather',
+        updated: 'Updated {time} local', offline: 'Offline preview · Not live data', tomorrow: 'Tomorrow', rainChance: 'Rain chance {value} percent',
+        loadingWeather: 'Fetching live weather for {city}…',
+        weatherFailed: 'Live weather for {city} is unavailable. Showing a saved Tokyo sample, not current conditions. Search again to retry.',
+        enterCity: 'Enter a city name to search.', searching: 'Finding cities…', noCities: 'No cities found. Try a different name or spelling.',
+        chooseCity: 'Choose a city below.', searchFailed: 'City search is unavailable. Check your connection and try again. Your displayed forecast has not changed.',
+        clear: 'Clear skies', partlyCloudy: 'Partly cloudy', overcast: 'Overcast', foggy: 'Foggy', snowy: 'Snowy', thunder: 'Thunderstorms', drizzle: 'Drizzle', showers: 'Rain showers', rainy: 'Rainy',
+        sunTip: 'A bright outlook. Bring your sunglasses and enjoy a little time outside.',
+        partlyCloudyTip: 'A little sun, a little shade. A lovely excuse to take the scenic route.',
+        cloudTip: 'A softer kind of day. A light layer is always a good companion.',
+        fogTip: 'Take it slow outside. Fog can make visibility change quickly.',
+        snowTip: 'Bundle up and watch your step. Warm layers are your best friend today.',
+        thunderTip: 'Keep an eye on the sky. Head indoors if you hear thunder.',
+        rainTip: 'An umbrella kind of day. Bring a waterproof layer if you are heading out.'
+      }
+    };
+    const t = (key, values = {}) => translations[language][key].replace(/\{(\w+)\}/g, (_, name) => values[name]);
+    const cityName = city => city.name === 'Tokyo' && city.country_code === 'JP' && language === 'zh-Hant' ? '東京' : city.name;
+    const countryName = city => city.country_code ? new Intl.DisplayNames([language], { type: 'region' }).of(city.country_code) : city.country;
+    const messages = {};
+    function setMessage(id, key = '', city) {
+      messages[id] = { key, city };
+      $(id).textContent = key ? t(key, { city: city ? cityName(city) : '' }) : '';
+    }
+    function renderLanguage() {
+      document.documentElement.lang = language;
+      document.title = t('title');
+      document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = t(element.dataset.i18n); });
+      document.querySelectorAll('[data-i18n-aria]').forEach(element => { element.setAttribute('aria-label', t(element.dataset.i18nAria)); });
+      $('city-search').placeholder = t('placeholder');
+      document.querySelectorAll('[data-language]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
+      document.querySelectorAll('.metric-label').forEach((element, index) => {
+        const svg = element.querySelector('svg');
+        element.replaceChildren(svg, document.createTextNode(t(['feelsLike', 'humidity', 'wind'][index])));
+      });
+      Object.entries(messages).forEach(([id, message]) => setMessage(id, message.key, message.city));
+      document.querySelectorAll('#search-results button').forEach(button => { button.textContent = cityDescription(button.city); });
+    }
+    const cityDescription = city => [cityName(city), city.admin1, countryName(city)].filter(Boolean).join(', ');
+    const tokyo = { name: 'Tokyo', country: 'Japan', country_code: 'JP', latitude: 35.6762, longitude: 139.6503, timezone: 'Asia/Tokyo' };
     const sample = {
       timezone: 'Asia/Tokyo',
       current: { temperature_2m: 19, apparent_temperature: 18, relative_humidity_2m: 61, wind_speed_10m: 9, weather_code: 2, is_day: 1 },
@@ -169,17 +245,18 @@
       return '<svg viewBox="0 0 100 104" fill="none" aria-hidden="true">' + drawing + '</svg>';
     };
     function weatherInfo(code) {
-      if (code === 0) return ['Clear skies', 'sun', 'A bright outlook. Bring your sunglasses and enjoy a little time outside.'];
-      if (code <= 2) return ['Partly cloudy', 'sun', 'A little sun, a little shade. A lovely excuse to take the scenic route.'];
-      if (code === 3) return ['Overcast', 'cloud', 'A softer kind of day. A light layer is always a good companion.'];
-      if (code <= 48) return ['Foggy', 'cloud', 'Take it slow outside. Fog can make visibility change quickly.'];
-      if ([71, 73, 75, 77, 85, 86].includes(code)) return ['Snowy', 'snow', 'Bundle up and watch your step. Warm layers are your best friend today.'];
-      if (code >= 95) return ['Thunderstorms', 'rain', 'Keep an eye on the sky. Head indoors if you hear thunder.'];
-      return [code < 60 ? 'Drizzle' : code >= 80 ? 'Rain showers' : 'Rainy', 'rain', 'An umbrella kind of day. Bring a waterproof layer if you are heading out.'];
+      if (code === 0) return [t('clear'), 'sun', t('sunTip')];
+      if (code <= 2) return [t('partlyCloudy'), 'sun', t('partlyCloudyTip')];
+      if (code === 3) return [t('overcast'), 'cloud', t('cloudTip')];
+      if (code <= 48) return [t('foggy'), 'cloud', t('fogTip')];
+      if ([71, 73, 75, 77, 85, 86].includes(code)) return [t('snowy'), 'snow', t('snowTip')];
+      if (code >= 95) return [t('thunder'), 'rain', t('thunderTip')];
+      return [t(code < 60 ? 'drizzle' : code >= 80 ? 'showers' : 'rainy'), 'rain', t('rainTip')];
     }
     const temp = value => Math.round(unit === 'f' ? value * 9 / 5 + 32 : value);
     const drop = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3S6 11 6 15a6 6 0 0 0 12 0c0-4-6-12-6-12Z"/></svg>';
     function render() {
+      renderLanguage();
       const { city, data, live } = state;
       const current = data.current;
       const daily = data.daily;
@@ -189,26 +266,26 @@
         : { sun: ['#fbf3e4', '#ad650f'], cloud: ['#edf2ed', '#526d5b'], rain: ['#eaf1f8', '#4b769a'], snow: ['#edf4f8', '#547f99'] };
       document.documentElement.style.setProperty('--hero', palettes[theme][0]);
       document.documentElement.style.setProperty('--accent', palettes[theme][1]);
-      $('city-name').textContent = city.name;
-      const date = live ? new Intl.DateTimeFormat('en', { weekday: 'long', month: 'short', day: 'numeric', timeZone: data.timezone }).format(new Date()) : 'Illustrative forecast';
-      $('city-detail').textContent = [city.admin1, city.country, date].filter(Boolean).join(' · ');
+      $('city-name').textContent = cityName(city);
+      const date = live ? new Intl.DateTimeFormat(language, { weekday: 'long', month: 'short', day: 'numeric', timeZone: data.timezone }).format(new Date()) : t('sampleDate');
+      $('city-detail').textContent = [city.admin1, countryName(city), date].filter(Boolean).join(' · ');
       $('temperature').innerHTML = temp(current.temperature_2m) + '<span>°' + unit.toUpperCase() + '</span>';
-      $('condition').textContent = current.is_day === 0 && current.weather_code <= 1 ? 'Clear night' : label;
-      $('high-low').textContent = 'H: ' + temp(daily.temperature_2m_max[0]) + '°   /   L: ' + temp(daily.temperature_2m_min[0]) + '°';
+      $('condition').textContent = current.is_day === 0 && current.weather_code <= 1 ? t('clearNight') : label;
+      $('high-low').textContent = t('high') + ' ' + temp(daily.temperature_2m_max[0]) + '° / ' + t('low') + ' ' + temp(daily.temperature_2m_min[0]) + '°';
       $('hero-art').innerHTML = icon(current.weather_code, current.is_day === 0);
       $('feels-like').textContent = temp(current.apparent_temperature) + '°';
       $('humidity').textContent = Math.round(current.relative_humidity_2m) + '%';
-      $('wind').textContent = Math.round(current.wind_speed_10m) + ' km/h';
-      $('data-source').textContent = live ? 'Live weather' : 'Sample weather';
+      $('wind').textContent = Math.round(current.wind_speed_10m) + ' ' + t('windUnit');
+      $('data-source').textContent = t(live ? 'live' : 'sample');
       $('weather-tip').textContent = tip;
-      $('updated').textContent = live ? 'Updated ' + new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit', timeZone: data.timezone }).format(state.fetchedAt) + ' local' : 'Offline preview · Not live data';
+      $('updated').textContent = live ? t('updated', { time: new Intl.DateTimeFormat(language, { hour: 'numeric', minute: '2-digit', timeZone: data.timezone }).format(state.fetchedAt) }) : t('offline');
       $('forecast').replaceChildren();
       for (let i = 1; i <= 5; i++) {
         const day = document.createElement('article');
         day.className = 'day';
         const dayDate = new Date(daily.time[i] + 'T12:00:00Z');
         const description = weatherInfo(daily.weather_code[i])[0];
-        day.innerHTML = '<div class="day-name">' + (live && i === 1 ? 'Tomorrow' : dayDate.toLocaleDateString('en', { weekday: 'short', timeZone: 'UTC' })) + '</div><div class="day-date">' + dayDate.toLocaleDateString('en', { month: 'short', day: 'numeric', timeZone: 'UTC' }) + '</div>' + icon(daily.weather_code[i]) + '<div class="day-condition">' + description + '</div><div class="day-temps">' + temp(daily.temperature_2m_max[i]) + '°<span>' + temp(daily.temperature_2m_min[i]) + '°</span></div><div class="rain" aria-label="Rain chance ' + daily.precipitation_probability_max[i] + ' percent">' + drop + daily.precipitation_probability_max[i] + '%</div>';
+        day.innerHTML = '<div class="day-name">' + (live && i === 1 ? t('tomorrow') : dayDate.toLocaleDateString(language, { weekday: 'short', timeZone: 'UTC' })) + '</div><div class="day-date">' + dayDate.toLocaleDateString(language, { month: 'short', day: 'numeric', timeZone: 'UTC' }) + '</div>' + icon(daily.weather_code[i]) + '<div class="day-condition">' + description + '</div><div class="day-temps">' + temp(daily.temperature_2m_max[i]) + '°<span>' + temp(daily.temperature_2m_min[i]) + '°</span></div><div class="rain" aria-label="' + t('rainChance', { value: daily.precipitation_probability_max[i] }) + '">' + drop + daily.precipitation_probability_max[i] + '%</div>';
         $('forecast').append(day);
       }
     }
@@ -231,7 +308,7 @@
       const controller = new AbortController();
       weatherController = controller;
       $('weather').setAttribute('aria-busy', 'true');
-      $('weather-status').textContent = 'Fetching live weather for ' + city.name + '…';
+      setMessage('weather-status', 'loadingWeather', city);
       try {
         const params = new URLSearchParams({ latitude: city.latitude, longitude: city.longitude, current: 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m', daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max', timezone: 'auto', forecast_days: '6', temperature_unit: 'celsius', wind_speed_unit: 'kmh' });
         const data = await fetchJSON('https://api.open-meteo.com/v1/forecast?' + params, controller);
@@ -240,13 +317,13 @@
         new Intl.DateTimeFormat('en', { timeZone: data.timezone });
         state = { city, data, live: true, fetchedAt: new Date() };
         render();
-        $('weather-status').textContent = '';
+        setMessage('weather-status');
       } catch (error) {
         if (request !== weatherRequest) return;
         console.warn('Unable to load live weather:', error);
         state = { city: tokyo, data: sample, live: false };
         render();
-        $('weather-status').textContent = 'Live weather for ' + city.name + ' is unavailable. Showing a saved Tokyo sample, not current conditions. Search again to retry.';
+        setMessage('weather-status', 'weatherFailed', city);
       } finally {
         if (request === weatherRequest) $('weather').setAttribute('aria-busy', 'false');
       }
@@ -254,7 +331,7 @@
     $('search-form').addEventListener('submit', async event => {
       event.preventDefault();
       const query = $('city-search').value.trim();
-      if (!query) { $('search-status').textContent = 'Enter a city name to search.'; return; }
+      if (!query) { setMessage('search-status', 'enterCity'); return; }
       const request = ++searchRequest;
       searchController?.abort();
       const controller = new AbortController();
@@ -262,22 +339,23 @@
       $('search-results').hidden = true;
       $('search-results').replaceChildren();
       $('search-button').disabled = true;
-      $('search-status').textContent = 'Finding cities…';
+      setMessage('search-status', 'searching');
       try {
         const params = new URLSearchParams({ name: query, count: '5', language: 'en', format: 'json' });
         const data = await fetchJSON('https://geocoding-api.open-meteo.com/v1/search?' + params, controller);
         if (request !== searchRequest) return;
         if (data.error || (data.results !== undefined && !Array.isArray(data.results))) throw new Error('Invalid city search response');
         const cities = (data.results || []).filter(city => typeof city.name === 'string' && Number.isFinite(city.latitude) && Number.isFinite(city.longitude));
-        if (!cities.length) { $('search-status').textContent = 'No cities found. Try a different name or spelling.'; return; }
-        $('search-status').textContent = 'Choose a city below.';
+        if (!cities.length) { setMessage('search-status', 'noCities'); return; }
+        setMessage('search-status', 'chooseCity');
         for (const city of cities) {
           const button = document.createElement('button');
           button.type = 'button';
-          button.textContent = [city.name, city.admin1, city.country].filter(Boolean).join(', ');
+          button.city = city;
+          button.textContent = cityDescription(city);
           button.addEventListener('click', () => {
             $('search-results').hidden = true;
-            $('search-status').textContent = '';
+            setMessage('search-status');
             $('city-search').value = city.name;
             loadWeather(city);
           });
@@ -287,7 +365,7 @@
       } catch (error) {
         if (request !== searchRequest) return;
         console.warn('Unable to search cities:', error);
-        $('search-status').textContent = 'City search is unavailable. Check your connection and try again. Your displayed forecast has not changed.';
+        setMessage('search-status', 'searchFailed');
       } finally {
         if (request === searchRequest) $('search-button').disabled = false;
       }
@@ -297,10 +375,10 @@
       searchController?.abort();
       $('search-button').disabled = false;
       $('search-results').hidden = true;
-      $('search-status').textContent = '';
+      setMessage('search-status');
     });
     $('city-search').addEventListener('keydown', event => {
-      if (event.key === 'Escape') { $('search-results').hidden = true; $('search-status').textContent = ''; }
+      if (event.key === 'Escape') { $('search-results').hidden = true; setMessage('search-status'); }
     });
     document.querySelectorAll('[data-unit]').forEach(button => button.addEventListener('click', () => {
       unit = button.dataset.unit;
@@ -308,6 +386,10 @@
       render();
     }));
     darkMode.addEventListener('change', render);
+    document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => {
+      language = button.dataset.language;
+      render();
+    }));
     render();
     loadWeather(tokyo);
   </script>
